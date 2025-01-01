@@ -11,12 +11,14 @@ pub trait InWorkshop {
 
 } impl InWorkshop for Commands {
 	fn new(&self, args: Vec<String>) {
+		// Check if name is right
 		let project_name: &str = &args[0];
 		self.error_handler.handle(
 			check_for_wrong_characters(project_name),
 			"Improper characters were used"
 		);
 
+		// Create project folder
 		println!("{}", "creating project folder...".yellow());
 		let project_dir = String::add_str(&["./", project_name, "/"]);
 		self.error_handler.handle(
@@ -25,6 +27,7 @@ pub trait InWorkshop {
 		);
 		println!("{}\n", "  project folder created".green());
 
+		// Create venv folder
 		println!("{}", "creating virtual environment...".yellow());
 		let venv_dir = String::add_str(&[&project_dir, "venv/"]);
 		self.error_handler.handle(
@@ -34,22 +37,23 @@ pub trait InWorkshop {
 		);
 		println!("{}\n", "  virtual environment created".green());
 
+		// Create main file
 		println!("{}", "creating main.py".yellow());
 		let main_python_dir = &String::add_str(&[&project_dir, "main.py"]);
 		if args.len() == 1 { self.error_handler.handle(
-				fs::write(main_python_dir, content::default_content()),
-				"failed to create main.py"
+			fs::write(main_python_dir, content::default_content()),
+			"failed to create main.py"
 
 		);} else { match args[1].as_str() {
 			"-d" | "--default" => { self.error_handler.handle(
 				fs::write(main_python_dir, content::default_content()),
 				"failed to create main.py"
 			);}
-			"-c" | "--class" => { self.error_handler.handle(
+			"-c" | "--class"   => { self.error_handler.handle(
 				fs::write(main_python_dir, content::class_content()),
 				"failed to create main.py"
 			);}
-			"-s" | "--simple" => { self.error_handler.handle(
+			"-s" | "--simple"  => { self.error_handler.handle(
 				fs::write(main_python_dir, content::simple_content()),
 				"failed to create main.py"
 			);}

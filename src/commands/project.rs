@@ -21,11 +21,6 @@ pub trait InProject{
 
 		let python_interpreter_dir = "venv/bin/python3";
 
-		self.error_handler.handle(
-		check_if_in_project(),
-			"you are not currently in a project"
-		);
-
 		let _ = self.error_handler.handle(
 			Command::new(python_interpreter_dir)
 				.arg("./main.py").status(),
