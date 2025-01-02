@@ -7,7 +7,7 @@ use toml;
 
 pub struct TomlFile {
     path: String,
-    content: toml::Table,
+    pub content: toml::Table,
 
 } impl TomlFile {
     pub fn new(path: &str) -> TomlFile {
