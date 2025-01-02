@@ -3,7 +3,7 @@ use std::env::args;
 mod commands;
 use commands::{Commands, workshop::*, project::*};
 mod error_handler;
-mod utils;
+//mod utils;
 
 
 fn main() {
