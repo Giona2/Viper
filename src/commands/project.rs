@@ -1,7 +1,7 @@
 use std::process::Command;
 use std::path::Path;
 use colored::Colorize;
-use utils::type_traits::*;
+use crate::utils::type_traits::*;
 
 use super::{Commands, Error};
 

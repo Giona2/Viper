@@ -1,6 +1,6 @@
 use std::fs;
 use std::process::Command;
-use utils::type_traits::*;
+use crate::utils::type_traits::*;
 use colored::Colorize;
 
 use super::{Commands, Error, content};

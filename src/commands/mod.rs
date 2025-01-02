@@ -1,5 +1,5 @@
 use colored::Colorize;
-use utils::advanced_error_handling::*;
+use crate::utils::error_handler::*;
 
 
 pub mod workshop;

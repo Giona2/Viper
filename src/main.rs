@@ -2,6 +2,7 @@ use std::env::args;
 
 mod commands;
 use commands::{Commands, workshop::*, project::*};
+mod utils;
 
 
 fn main() {
