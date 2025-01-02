@@ -26,7 +26,6 @@ pub trait InProject{
 				.arg("./main.py").status(),
 			"failed to create main.py"
 		);
-
 	}
 
 	fn list(&self) {

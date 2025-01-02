@@ -45,15 +45,15 @@ pub trait InWorkshop {
 			"failed to create main.py"
 
 		);} else { match args[1].as_str() {
-			"-d" | "--default" => { self.error_handler.handle(
+			"-e" | "--entry-point" => { self.error_handler.handle(
 				fs::write(main_python_dir, content::default_content()),
 				"failed to create main.py"
 			);}
-			"-c" | "--class"   => { self.error_handler.handle(
+			"-c" | "--class"       => { self.error_handler.handle(
 				fs::write(main_python_dir, content::class_content()),
 				"failed to create main.py"
 			);}
-			"-s" | "--simple"  => { self.error_handler.handle(
+			"-s" | "--simple"      => { self.error_handler.handle(
 				fs::write(main_python_dir, content::simple_content()),
 				"failed to create main.py"
 			);}
