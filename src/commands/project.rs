@@ -1,9 +1,9 @@
-use std::process::Command;
-use std::path::Path;
-use colored::Colorize;
-use crate::utils::type_traits::*;
+use crate::error_handler::commands_error::CommandsErrorHandler;
 
-use super::{Commands, Error};
+use std::process::Command;
+use colored::Colorize;
+
+use super::{Commands, commands_error::CommandsError};
 
 
 pub trait InProject{
@@ -14,69 +14,53 @@ pub trait InProject{
 
 } impl InProject for Commands {
 	fn run(&self) {
-		self.error_handler.handle(
-			check_if_in_project(),
-			"you are not currently in a project"
-		);
+
 
 		let python_interpreter_dir = "venv/bin/python3";
 
-		let _ = self.error_handler.handle(
-			Command::new(python_interpreter_dir)
-				.arg("./main.py").status(),
-			"failed to create main.py"
-		);
+		Command::new(python_interpreter_dir)
+			.arg("./main.py")
+            .status().expect("Failed to create main.py");
 	}
 
 	fn list(&self) {
-		self.error_handler.handle(
-			check_if_in_project(),
-			"you are not currently in a prject",
-		);
+        CommandsError::in_project_directory()
+            .handle();
 
 		let pip_dir = "./venv/bin/pip3";
 
-		let package_list_raw = self.error_handler.handle(
-			Command::new(pip_dir)
-				.arg("freeze")
-				.output(),
-			"failed to get package list"
-		);
+		let package_list_raw = Command::new(pip_dir)
+			.arg("freeze")
+			.output().expect("Failed to get package list");
 
 		print_freeze_output(String::from_utf8(package_list_raw.stdout).unwrap());
 	}
 
 	fn install(&self, args: Vec<String>) {
-		self.error_handler.handle(
-			check_if_in_project(),
-			"your are not currently in a project"
-		);
+        CommandsError::in_project_directory()
+            .handle();
 
 		let pip_dir = "./venv/bin/pip3";
 		let package_name = &args[0];
 
 		println!("{} {} {}", "installing".yellow(), package_name.underline(), "package".yellow());
-		self.error_handler.handle(
-			Command::new(pip_dir)
-				.args(["install", package_name]).status(),
-			&String::add_str(&["failed to install", package_name])
-		);
+		Command::new(pip_dir)
+			.args(["install", package_name])
+            .status().expect(&format!("Failed to run pip install {package_name}"));
 		println!("  {} {}", package_name.underline(), "installed".green())
 	}
 
 	fn remove(&self, args: Vec<String>) {
-		check_if_in_project()
-			.red_expect("you are not currently in a project directory");
+        CommandsError::in_project_directory()
+            .handle();
 
 		let pip_dir = "./venv/bin/pip3";
 		let package_name = &args[0];
 
 		println!("{} {} {}", "remove".yellow(), package_name.underline(), "package".yellow());
-		self.error_handler.handle(
-			Command::new(pip_dir)
-				.args(["uninstall", package_name]).status(),
-			&String::add_str(&["failed to remove", package_name])
-		);
+		Command::new(pip_dir)
+			.args(["uninstall", package_name])
+            .status().expect(&format!("Failed to install {package_name}"));
 		println!("  {} {}", package_name.underline(), "removed".green())
 	}
 }
@@ -93,12 +77,3 @@ fn print_freeze_output(freeze_output: String) {
 		println!("{} ({})", package_name.trim().underline(), package_version.trim())
 	}
 }
-
-fn check_if_in_project() -> Result<(), Error> {
-	if !Path::new("./main.py").exists() || !Path::new("./venv/").exists() {
-		Err(Error::NotInProjectDirectory)
-	} else {
-		Ok(())
-	}
-}
-

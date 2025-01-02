@@ -1,16 +1,14 @@
 use colored::Colorize;
-use crate::utils::error_handler::*;
 
 
 pub mod workshop;
 pub mod project;
 pub mod content;
+pub mod commands_error;
 
 pub struct Commands {
-	pub error_handler: ErrorHandler,
 } impl Commands {
 	pub fn _new() -> Commands { Commands {
-	    error_handler: ErrorHandler::new(),
 	}}
 
 	pub fn help(&self, ) {
@@ -38,12 +36,4 @@ pub struct Commands {
 		println!("  if in a folder created by viper new, it will remove the specified package from the local virtual environment");
 	    println!("  based on the pip3 uninstall command");
 	}
-}
-
-#[derive(Debug, thiserror::Error)]
-enum Error {
-	#[error("Improper characters were used")]
-	ImproperCharactersUsed,
-	#[error("The user needs to run this command in a python project")]
-	NotInProjectDirectory,
 }
