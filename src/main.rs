@@ -2,7 +2,6 @@ use std::env::args;
 
 mod commands;
 use commands::{Commands, workshop::*, project::*};
-mod config_file;
 mod error_handler;
 mod io;
 mod data;

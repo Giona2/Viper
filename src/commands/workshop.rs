@@ -1,8 +1,8 @@
+use crate::data;
 use crate::error_handler::{io_lib::IOLibHandler, commands_error::CommandsErrorHandler};
-use crate::config_file::{self, ConfigFile, toml_file::TomlFile};
+use crate::io::toml_file::TomlFile;
 use crate::io::toml::TomlExtra;
 
-use std::fmt::format;
 use std::fs;
 use std::process::Command;
 use colored::Colorize;
@@ -28,7 +28,8 @@ pub trait InWorkshop {
 		println!("{}\n", "  project folder created".green());
 
         // Create ConfigFile
-        let config_file_dir: String = format!("{project_dir}/pyproject.toml");
+		println!("{}", "creating config file...".yellow());
+        let config_file_dir: String = format!("{project_dir}/{}", data::CONFIG_FILE_NAME);
         let mut config_file: TomlFile = TomlFile::new(&config_file_dir);
         config_file.content = toml::from_str(content::CONFIG_FILE)
             .unwrap();
@@ -47,6 +48,7 @@ pub trait InWorkshop {
             Vec::new(),
         ));
         config_file.update_file();
+		println!("{}\n", "  config file created".green());
 
 		// Create venv folder
 		println!("{}", "creating virtual environment...".yellow());
