@@ -1,5 +1,7 @@
 use crate::error_handler::{io_lib::IOLibHandler, commands_error::CommandsErrorHandler};
+use crate::config_file::{self, ConfigFile};
 
+use std::fmt::format;
 use std::fs;
 use std::process::Command;
 use colored::Colorize;
@@ -19,22 +21,26 @@ pub trait InWorkshop {
 
 		// Create project folder
 		println!("{}", "creating project folder...".yellow());
-		let project_dir = format!("./{project_name}/");
+		let project_dir = format!("./{project_name}");
 		fs::create_dir(&project_dir)
             .handle(&project_dir);
 		println!("{}\n", "  project folder created".green());
 
+        // Create ConfigFile
+        let config_file_dir: String = format!("{project_dir}/pyproject.toml");
+        let config_file = ConfigFile::new(&config_file_dir);
+
 		// Create venv folder
 		println!("{}", "creating virtual environment...".yellow());
-		let venv_dir = format!("{project_dir}venv/");
-		Command::new("python3")
+		let venv_dir = format!("{project_dir}/venv");
+		Command::new("python")
 			.args(["-m", "venv", &venv_dir])
             .status().expect("failed to create virtual environment");
 		println!("{}\n", "  virtual environment created".green());
 
 		// Create main file
 		println!("{}", "creating main.py".yellow());
-		let main_python_dir: String = format!("{project_dir}main.py");
+		let main_python_dir: String = format!("{project_dir}/main.py");
 		if args.len() == 1 {
 			fs::write(main_python_dir, content::default_content())
                 .expect("Failed to create main.py");

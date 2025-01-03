@@ -16,10 +16,12 @@ pub struct ConfigFile {
     file: TomlFile,
 
 } impl ConfigFile {
-    pub fn new() -> ConfigFile {
-        let mut result: ConfigFile = ConfigFile { file: TomlFile::new(data::CONFIG_FILE_DIR) };
+    pub fn new(path: &str) -> ConfigFile {
+        let file_exists: bool = Path::new(path).exists();
 
-        if !Path::new(data::CONFIG_FILE_DIR).exists() {
+        let mut result: ConfigFile = ConfigFile { file: TomlFile::new(path) };
+
+        if !file_exists {
             result.file.content.insert("build-system".to_string(), toml::Value::Table(toml::Table::new()));
             result.file.content.insert("project".to_string(), toml::Value::Table(toml::Table::new()));
             result.file.content.insert("dependencies".to_string(), toml::Value::Table(toml::Table::new()));

@@ -1,4 +1,5 @@
 use crate::error_handler::commands_error::CommandsErrorHandler;
+use crate::data;
 
 use std::process::Command;
 use colored::Colorize;
@@ -18,9 +19,7 @@ pub trait InProject{
         CommandsError::in_project_directory()
             .handle();
 
-		let python_interpreter_dir = "venv/bin/python3";
-
-		Command::new(python_interpreter_dir)
+		Command::new(data::INTERPRETER_DIR)
 			.arg("./main.py")
             .status().expect("Failed to run main.py");
 	}
@@ -29,9 +28,7 @@ pub trait InProject{
         CommandsError::in_project_directory()
             .handle();
 
-		let pip_dir = "./venv/bin/pip3";
-
-		let package_list_raw = Command::new(pip_dir)
+		let package_list_raw = Command::new(data::PIP_DIR)
 			.arg("freeze")
 			.output().expect("Failed to get package list");
 
@@ -39,7 +36,8 @@ pub trait InProject{
 	}
 
     fn reload(&self) {
-
+        CommandsError::in_project_directory()
+            .handle();
     }
 
 	/*fn install(&self, args: Vec<String>) {
