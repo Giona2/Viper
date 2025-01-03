@@ -9,7 +9,7 @@ pub mod dependencies;
 use dependencies::*;
 pub mod metadata;
 use metadata::*;
-mod toml_file;
+pub mod toml_file;
 use toml_file::TomlFile;
 
 pub struct ConfigFile {

@@ -1,5 +1,6 @@
 use crate::error_handler::{io_lib::IOLibHandler, commands_error::CommandsErrorHandler};
-use crate::config_file::{self, ConfigFile};
+use crate::config_file::{self, ConfigFile, toml_file::TomlFile};
+use crate::io::toml::TomlExtra;
 
 use std::fmt::format;
 use std::fs;
@@ -28,7 +29,24 @@ pub trait InWorkshop {
 
         // Create ConfigFile
         let config_file_dir: String = format!("{project_dir}/pyproject.toml");
-        let config_file = ConfigFile::new(&config_file_dir);
+        let mut config_file: TomlFile = TomlFile::new(&config_file_dir);
+        config_file.content = toml::from_str(content::CONFIG_FILE)
+            .unwrap();
+        config_file.content.insert_value(vec!["build-system", "requires"], toml::Value::Array(vec![
+            toml::Value::String("pip".to_string()),
+            toml::Value::String("venv".to_string()),
+            toml::Value::String("viper".to_string()),
+        ]));
+        config_file.content.insert_value(vec!["project", "name"], toml::Value::String(
+            project_name.to_string()
+        ));
+        config_file.content.insert_value(vec!["project", "version"], toml::Value::String(
+            "1.0.0".to_string()
+        ));
+        config_file.content.insert_value(vec!["dependencies", "required"], toml::Value::Array(
+            Vec::new(),
+        ));
+        config_file.update_file();
 
 		// Create venv folder
 		println!("{}", "creating virtual environment...".yellow());
