@@ -1,0 +1,5 @@
+[build-system]
+buld-backend = "viper"
+requires = ["pip", "venv", "viper"]
+
+[project]

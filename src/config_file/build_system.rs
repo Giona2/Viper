@@ -1,4 +1,5 @@
 use super::ConfigFile;
+use crate::io::toml::TomlExtra;
 
 use toml;
 
@@ -8,17 +9,15 @@ pub trait BuildSystem {
 
 } impl BuildSystem for ConfigFile {
     fn create_build_system(&mut self) {
-        let mut build_system_table: toml::Table = toml::Table::new();
-
-        let build_system_table_requires: toml::Value = toml::Value::Array(vec![
+        self.file.content.insert_value(vec!["build-system", "requires"], toml::Value::Array(vec![
             toml::Value::String("pip".to_string()),
             toml::Value::String("venv".to_string()),
             toml::Value::String("viper".to_string()),
-        ]);
-        let build_system_table_build_backend: toml::Value = toml::Value::String("viper".to_string());
+        ]));
 
-        if let Some(build_system_table) = self.file.content.get_mut("build-system") {
-        }
+        self.file.content.insert_value(vec!["build-system", "buld-backend"],
+            toml::Value::String("viper".to_string())
+        );
 
         self.file.update_file();
     }

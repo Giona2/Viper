@@ -9,18 +9,20 @@ use super::{Commands, commands_error::CommandsError};
 pub trait InProject{
 	fn run(&self);
 	fn list(&self);
-	fn install(&self, args: Vec<String>);
-	fn remove(&self, args: Vec<String>);
+    fn reload(&self);
+	//fn install(&self, args: Vec<String>);
+	//fn remove(&self, args: Vec<String>);
 
 } impl InProject for Commands {
 	fn run(&self) {
-
+        CommandsError::in_project_directory()
+            .handle();
 
 		let python_interpreter_dir = "venv/bin/python3";
 
 		Command::new(python_interpreter_dir)
 			.arg("./main.py")
-            .status().expect("Failed to create main.py");
+            .status().expect("Failed to run main.py");
 	}
 
 	fn list(&self) {
@@ -36,7 +38,11 @@ pub trait InProject{
 		print_freeze_output(String::from_utf8(package_list_raw.stdout).unwrap());
 	}
 
-	fn install(&self, args: Vec<String>) {
+    fn reload(&self) {
+
+    }
+
+	/*fn install(&self, args: Vec<String>) {
         CommandsError::in_project_directory()
             .handle();
 
@@ -48,9 +54,9 @@ pub trait InProject{
 			.args(["install", package_name])
             .status().expect(&format!("Failed to run pip install {package_name}"));
 		println!("  {} {}", package_name.underline(), "installed".green())
-	}
+	}*/
 
-	fn remove(&self, args: Vec<String>) {
+	/*fn remove(&self, args: Vec<String>) {
         CommandsError::in_project_directory()
             .handle();
 
@@ -62,7 +68,7 @@ pub trait InProject{
 			.args(["uninstall", package_name])
             .status().expect(&format!("Failed to install {package_name}"));
 		println!("  {} {}", package_name.underline(), "removed".green())
-	}
+	}*/
 }
 
 fn print_freeze_output(freeze_output: String) {

@@ -5,6 +5,7 @@ use commands::{Commands, workshop::*, project::*};
 mod config_file;
 mod error_handler;
 mod io;
+mod data;
 
 
 fn main() {
@@ -16,8 +17,9 @@ fn main() {
         
 		"run"		 => commands.run(),
 		"list"		 => commands.list(),
-		"install"	 => commands.install(args[2..args.len()].to_vec()),
-		"remove"	 => commands.remove(args[2..args.len()].to_vec()),
+        "reload"     => commands.reload(),
+		//"install"	 => commands.install(args[2..args.len()].to_vec()),
+		//"remove"	 => commands.remove(args[2..args.len()].to_vec()),
 
 		"help" | "h" => commands.help(),
 		_ => {}

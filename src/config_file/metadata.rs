@@ -6,6 +6,5 @@ pub trait Metadata {
     
 } impl Metadata for ConfigFile {
     fn create_metadata(&mut self) {
-        
     }
 }
