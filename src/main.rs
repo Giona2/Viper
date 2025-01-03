@@ -7,7 +7,7 @@ mod error_handler;
 mod utils;
 
 
-fn _main() {
+fn main() {
 	let args: Vec<String> = args().collect();
 
 	let commands = Commands::_new();
@@ -22,10 +22,4 @@ fn _main() {
 		"help" | "h" => commands.help(),
 		_ => {}
 	}
-}
-
-
-use config_file::ConfigFile;
-fn main() {
-    ConfigFile::new("./pyproject.toml");
 }

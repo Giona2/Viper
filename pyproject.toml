@@ -1,3 +1,0 @@
-[build-system]
-build_backend = "viper"
-requires = ["pip", "venv", "viper"]

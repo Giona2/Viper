@@ -17,10 +17,9 @@ pub trait BuildSystem {
         ]);
         let build_system_table_build_backend: toml::Value = toml::Value::String("viper".to_string());
 
-        build_system_table.insert("requires".to_string(), build_system_table_requires);
-        build_system_table.insert("build_backend".to_string(), build_system_table_build_backend);
+        if let Some(build_system_table) = self.file.content.get_mut("build-system") {
+        }
 
-        self.file.content.insert("build-system".to_string(), toml::Value::Table(build_system_table));
         self.file.update_file();
     }
 }
