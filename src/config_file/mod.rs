@@ -1,12 +1,11 @@
-use crate::utils::toml_file::TomlFile;
-
-
 pub mod build_system;
 use build_system::*;
 pub mod dependencies;
 use dependencies::*;
 pub mod metadata;
 use metadata::*;
+pub mod toml_file;
+use toml_file::TomlFile;
 
 pub struct ConfigFile {
     file: TomlFile,
