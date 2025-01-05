@@ -47,9 +47,10 @@ pub trait InProject{
         let installed_packages = viper_config_file.content.get_mut("installed_packages").unwrap()
             .as_array_mut().unwrap();
 
-        let mut packages_to_intall = config_file.content.get_value(vec!["dependencies", "required"]);
+        // Install Packages
+        let mut packages_to_install = config_file.content.get_value(vec!["dependencies", "required"]);
 
-        for package in packages_to_intall.get_array().unwrap() {
+        for package in packages_to_install.get_array().unwrap() {
             let package_name: String = package.to_string()
                 .replace("\"", "");
 
@@ -58,6 +59,25 @@ pub trait InProject{
                 .status().unwrap();
 
             installed_packages.push(toml::Value::String(package_name));
+        }
+
+
+        // Remove Packages
+        let mut packages_indexes_to_remove: Vec<usize> = Vec::new();
+
+        for (i, installed_package) in installed_packages.clone().iter().enumerate() {
+
+            if !packages_to_install.get_array().unwrap().contains(installed_package) {
+                let installed_package_name: String = installed_package.to_string()
+                    .replace("\"", "");
+                
+                Command::new(data::PIP_DIR).arg("uninstall")
+                    .arg(installed_package_name)
+                    .status().unwrap();
+                
+            }
+
+            packages_indexes_to_remove.push(i);
         }
 
         viper_config_file.update_file();
