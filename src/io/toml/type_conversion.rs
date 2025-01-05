@@ -9,3 +9,12 @@ pub trait ValueToTable {
         return Some(table)
     } else { return None }}
 }
+
+pub trait ValueToArray {
+    fn get_array(&mut self) -> Option<&mut Vec::<toml::Value>>;
+
+} impl ValueToArray for toml::Value {
+    fn get_array(&mut self) -> Option<&mut Vec::<toml::Value>> { if let Some(array) = self.as_array_mut(){
+        return Some(array)
+    } else { return None }}
+}

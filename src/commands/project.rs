@@ -1,6 +1,7 @@
+use crate::io::toml::type_conversion::ValueToArray;
 use crate::{error_handler::commands_error::CommandsErrorHandler, io::toml_file::TomlFile};
 use crate::data;
-use crate::io::toml::type_conversion::ValueToTable;
+use crate::io::toml::TomlExtra;
 
 use std::process::Command;
 use colored::Colorize;
@@ -40,9 +41,18 @@ pub trait InProject{
         CommandsError::in_project_directory()
             .handle();
 
-        let config_file = TomlFile::new(data::CONFIG_FILE_NAME);
+        let mut config_file = TomlFile::new(data::CONFIG_FILE_NAME);
 
-        //let packages_to_intall = config_file.content.;
+        let mut packages_to_intall = config_file.content.get_value(vec!["dependencies", "required"]);
+
+        for package in packages_to_intall.get_array().unwrap() {
+            let package_name: String = package.to_string()
+                .replace("\"", "");
+
+            Command::new(data::PIP_DIR).arg("install")
+                .arg(package_name)
+                .status().unwrap();
+        }
     }
 
 	/*fn install(&self, args: Vec<String>) {
