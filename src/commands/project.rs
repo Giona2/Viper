@@ -1,5 +1,6 @@
-use crate::error_handler::commands_error::CommandsErrorHandler;
+use crate::{error_handler::commands_error::CommandsErrorHandler, io::toml_file::TomlFile};
 use crate::data;
+use crate::io::toml::type_conversion::ValueToTable;
 
 use std::process::Command;
 use colored::Colorize;
@@ -38,6 +39,10 @@ pub trait InProject{
     fn reload(&self) {
         CommandsError::in_project_directory()
             .handle();
+
+        let config_file = TomlFile::new(data::CONFIG_FILE_NAME);
+
+        //let packages_to_intall = config_file.content.;
     }
 
 	/*fn install(&self, args: Vec<String>) {
