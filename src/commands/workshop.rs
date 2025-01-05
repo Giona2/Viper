@@ -58,6 +58,14 @@ pub trait InWorkshop {
             .status().expect("failed to create virtual environment");
 		println!("{}\n", "  virtual environment created".green());
 
+        // Create viper config folder and installed packages file
+        let viper_config_dir = format!("{project_dir}/venv/lib/viper");
+        fs::create_dir(&viper_config_dir)
+            .handle(&viper_config_dir);
+        let installed_packages_dir = format!("{viper_config_dir}/installed_packages.toml");
+        fs::write(&installed_packages_dir, "")
+            .handle(&installed_packages_dir);
+
 		// Create main file
 		println!("{}", "creating main.py".yellow());
 		let main_python_dir: String = format!("{project_dir}/main.py");
