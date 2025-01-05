@@ -62,9 +62,10 @@ pub trait InWorkshop {
         let viper_config_dir = format!("{project_dir}/venv/lib/viper");
         fs::create_dir(&viper_config_dir)
             .handle(&viper_config_dir);
-        let installed_packages_dir = format!("{viper_config_dir}/installed_packages.toml");
-        fs::write(&installed_packages_dir, "")
-            .handle(&installed_packages_dir);
+        let installed_packages_dir = format!("{viper_config_dir}/config.toml");
+        let mut installed_packages_file: TomlFile = TomlFile::new(&installed_packages_dir);
+        installed_packages_file.content.insert_value(vec!["installed_packages"], toml::Value::Array(Vec::new()));
+        installed_packages_file.update_file();
 
 		// Create main file
 		println!("{}", "creating main.py".yellow());

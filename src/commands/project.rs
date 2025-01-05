@@ -1,4 +1,4 @@
-use crate::io::toml::type_conversion::ValueToArray;
+use crate::io::toml::type_conversion::*;
 use crate::{error_handler::commands_error::CommandsErrorHandler, io::toml_file::TomlFile};
 use crate::data;
 use crate::io::toml::TomlExtra;
@@ -42,6 +42,10 @@ pub trait InProject{
             .handle();
 
         let mut config_file = TomlFile::new(data::CONFIG_FILE_NAME);
+        let mut viper_config_file = TomlFile::new(data::VIPER_CONFIG_FILE_DIR); 
+
+        let installed_packages = viper_config_file.content.get_mut("installed_packages").unwrap()
+            .as_array_mut().unwrap();
 
         let mut packages_to_intall = config_file.content.get_value(vec!["dependencies", "required"]);
 
@@ -50,9 +54,13 @@ pub trait InProject{
                 .replace("\"", "");
 
             Command::new(data::PIP_DIR).arg("install")
-                .arg(package_name)
+                .arg(&package_name)
                 .status().unwrap();
+
+            installed_packages.push(toml::Value::String(package_name));
         }
+
+        viper_config_file.update_file();
     }
 
 	/*fn install(&self, args: Vec<String>) {
