@@ -65,9 +65,9 @@ pub trait InProject{
         // Remove Packages
         let mut updated_installed_packages: Vec<toml::Value> = Vec::new();
 
-        for (i, installed_package) in installed_packages.clone().iter().enumerate() {
+        for installed_package in installed_packages.clone() {
 
-            if !packages_to_install.get_array().unwrap().contains(installed_package) {
+            if !packages_to_install.get_array().unwrap().contains(&installed_package) {
                 let installed_package_name: String = installed_package.to_string()
                     .replace("\"", "");
                 
