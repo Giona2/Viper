@@ -72,5 +72,5 @@ viper reload : if in a folder created by viper new, it will reload the packages 
 ## Future Plans
 - [X] Overhauling the ```viper install``` and ```viper remove``` commands for a config.toml file in the root directory of your project similar in functionality to the Cargo.toml file in Rust.
 	- note that the pyproject.toml file was chosen instead of config.toml
+- [X] Moving source files to a src/ folder
 - [ ] Adding the ability to search for pypi packages using viper. I can imagine how helpful this might be after pip removed their built in search feature
-- [ ] Moving source files to a src/ folder
