@@ -22,7 +22,7 @@ pub trait InProject{
             .handle();
 
 		Command::new(data::INTERPRETER_DIR)
-			.arg("./main.py")
+			.arg(&(data::SOURCE_FILES_DIR.to_owned() + "/main.py"))
             .status().expect("Failed to run main.py");
 	}
 

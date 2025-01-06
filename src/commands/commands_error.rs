@@ -10,7 +10,7 @@ pub enum CommandsError {
 
 } impl CommandsError {
     pub fn in_project_directory() -> Result<(), CommandsError> {
-    	if !Path::new("./main.py").exists() || !Path::new("./venv/").exists() {
+    	if !Path::new("./src/").exists() || !Path::new("./venv/").exists() {
     		Err(CommandsError::NotInProjectDirectory)
     	} else {
     		Ok(())

@@ -67,9 +67,16 @@ pub trait InWorkshop {
         installed_packages_file.content.insert_value(vec!["installed_packages"], toml::Value::Array(Vec::new()));
         installed_packages_file.update_file();
 
+        // Create src folder
+		println!("{}", "creating src directory...".yellow());
+        let src_dir = format!("{project_dir}/src");
+        fs::create_dir(&src_dir)
+            .handle(&src_dir);
+		println!("{}\n", "  src directory created".green());
+
 		// Create main file
 		println!("{}", "creating main.py".yellow());
-		let main_python_dir: String = format!("{project_dir}/main.py");
+		let main_python_dir: String = format!("{src_dir}/main.py");
 		if args.len() == 1 {
 			fs::write(main_python_dir, content::ENTRY_POINT)
                 .expect("Failed to create main.py");
