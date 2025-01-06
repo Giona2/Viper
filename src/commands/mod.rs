@@ -24,16 +24,8 @@ pub struct Commands {
 		println!("viper run");
 		println!("  if in a folder created by viper new, it will run the main.py file sourcing the local virtual environment");
 	    println!();
-		println!("viper list");
-		println!("  if in a folder created by viper new, it will return the list of installed packages in the local virtual environment");
-	    println!("  based on the pip3 freeze command");
-	    println!();
-		println!("viper install <{}>", "package name".yellow());
-		println!("  if in a folder created by viper new, it will install the specified package to the local virtual environment");
-	    println!("  based on the pip3 install command");
-	    println!();
-		println!("viper remove <{}>", "package name".yellow());
-		println!("  if in a folder created by viper new, it will remove the specified package from the local virtual environment");
-	    println!("  based on the pip3 uninstall command");
+        println!("viper reload");
+        println!("  if in a folder created by viper new, it will reload the packages listed under the [dependencies] section of the pyproject.toml file and install/remove packages as needed
+")
 	}
 }

@@ -90,34 +90,6 @@ pub trait InProject{
 
         viper_config_file.update_file();
     }
-
-	/*fn install(&self, args: Vec<String>) {
-        CommandsError::in_project_directory()
-            .handle();
-
-		let pip_dir = "./venv/bin/pip3";
-		let package_name = &args[0];
-
-		println!("{} {} {}", "installing".yellow(), package_name.underline(), "package".yellow());
-		Command::new(pip_dir)
-			.args(["install", package_name])
-            .status().expect(&format!("Failed to run pip install {package_name}"));
-		println!("  {} {}", package_name.underline(), "installed".green())
-	}*/
-
-	/*fn remove(&self, args: Vec<String>) {
-        CommandsError::in_project_directory()
-            .handle();
-
-		let pip_dir = "./venv/bin/pip3";
-		let package_name = &args[0];
-
-		println!("{} {} {}", "remove".yellow(), package_name.underline(), "package".yellow());
-		Command::new(pip_dir)
-			.args(["uninstall", package_name])
-            .status().expect(&format!("Failed to install {package_name}"));
-		println!("  {} {}", package_name.underline(), "removed".green())
-	}*/
 }
 
 fn print_freeze_output(freeze_output: String) {
