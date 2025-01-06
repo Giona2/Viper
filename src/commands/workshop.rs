@@ -1,7 +1,7 @@
 use crate::data;
 use crate::error_handler::{io_lib::IOLibHandler, commands_error::CommandsErrorHandler};
-use crate::io::toml_file::TomlFile;
-use crate::io::toml::TomlExtra;
+use crate::data_file_parsing::toml_file::TomlFile;
+use crate::data_file_parsing::toml::TomlExtra;
 
 use std::fs;
 use std::process::Command;
