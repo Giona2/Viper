@@ -71,16 +71,16 @@ pub trait InWorkshop {
 		println!("{}", "creating main.py".yellow());
 		let main_python_dir: String = format!("{project_dir}/main.py");
 		if args.len() == 1 {
-			fs::write(main_python_dir, content::default_content())
+			fs::write(main_python_dir, content::ENTRY_POINT)
                 .expect("Failed to create main.py");
 		} else { match args[1].as_str() {
-			"-e" | "--entry-point" => { fs::write(main_python_dir, content::default_content())
+			"-e" | "--entry-point" => { fs::write(main_python_dir, content::ENTRY_POINT)
                 .expect("failed to create main.py");}
 
-			"-c" | "--class"       => { fs::write(main_python_dir, content::class_content())
+			"-c" | "--class"       => { fs::write(main_python_dir, content::CLASS)
                 .expect("failed to create main.py");}
 
-			"-s" | "--simple"      => { fs::write(main_python_dir, content::simple_content())
+			"-s" | "--simple"      => { fs::write(main_python_dir, content::SIMPLE)
                 .expect("failed to create main.py");}
 
 			_ => {}

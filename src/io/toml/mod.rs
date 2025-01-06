@@ -26,8 +26,6 @@ pub trait TomlExtra {
 } impl TomlExtra for toml::Table {
     fn insert_value(&mut self, sequential_keys: Vec<&str>, value: toml::Value) {
         fn insert_value_recursive(toml_table: &mut toml::Table, sequential_keys: Vec<&str>, value: toml::Value) {
-            println!("Sequential Keys: {sequential_keys:?}");
-
             if sequential_keys.len() > 1 {
                 let next_table: &mut toml::Table = toml_table.get_mut(sequential_keys[0]).unwrap()
                     .get_toml_table().unwrap();
@@ -42,8 +40,6 @@ pub trait TomlExtra {
 
     fn get_value(&mut self, sequential_keys: Vec<&str>) -> toml::Value {
         fn get_value_recursive(toml_table: &mut toml::Table, sequential_keys: Vec<&str>) -> toml::Value {
-            println!("Sequential Keys: {sequential_keys:?}");
-
             if sequential_keys.len() > 1 {
                 let next_table: &mut toml::Table = toml_table.get_mut(sequential_keys[0]).unwrap()
                     .get_toml_table().unwrap();

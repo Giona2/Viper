@@ -3,7 +3,8 @@ use std::env::args;
 mod commands;
 use commands::{Commands, workshop::*, project::*};
 mod error_handler;
-mod utils;
+mod io;
+mod data;
 
 
 fn main() {
@@ -15,8 +16,7 @@ fn main() {
         
 		"run"		 => commands.run(),
 		"list"		 => commands.list(),
-		"install"	 => commands.install(args[2..args.len()].to_vec()),
-		"remove"	 => commands.remove(args[2..args.len()].to_vec()),
+        "reload"     => commands.reload(),
 
 		"help" | "h" => commands.help(),
 		_ => {}
