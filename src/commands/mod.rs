@@ -25,7 +25,13 @@ pub struct Commands {
 		println!("  if in a folder created by viper new, it will run the main.py file sourcing the local virtual environment");
 	    println!();
         println!("viper reload");
-        println!("  if in a folder created by viper new, it will reload the packages listed under the [dependencies] section of the pyproject.toml file and install/remove packages as needed
-")
+        println!("  if in a folder created by viper new, it will reload the packages listed under the [dependencies] section of the pyproject.toml file and install/remove packages as needed");
+        println!();
+        println!("viper search <{}>", "package name".yellow());
+        println!("  searches pypi.org for the package name given and prints the name and version number of all matched packages");
+        println!();
+        println!("viper info <{}>", "package_name".yellow());
+        println!("  prints more verbose information about one package");
+        println!("  the exact package name must be used or an error will be returned");
 	}
 }
