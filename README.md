@@ -1,5 +1,5 @@
 # Viper pip wrapper
-Viper is a python project manager and pip wrapper written in Rust and based on Rust's cargo package manager. Viper is meant to make creating and managing python projects a centralized process taking inspiration from cargo.
+Viper is a python project manager and pip wrapper based on Rust's cargo package manager. Viper is meant to make creating and managing python projects a centralized process.
 
 ## The Workshop
 ### Description
@@ -12,7 +12,7 @@ viper new : creates a new python project with a virtual environment and a main.p
 
 ## The Project
 ### Description
-"The Project" is the folder created by ```viper new```. By default, viper will create a virtual environment (venv) directory and a main.py file in the python entry point layout.
+"The Project" is the folder created by ```viper new```. By default, viper will create a virtual environment (venv) directory, a pyproject.toml file, a main.py file in the python entry point layout.
 ```python
 def main():
     print("hello, world!")
@@ -35,15 +35,42 @@ and the simple layout
 ```python
 print("hello, world!")
 ```
-by passing either the -e|--entry-point (entry point layout), -c|--class (class layout), or -s|--simple (simple layout) at the end of the ```viper new``` command
+by passing the following at the end of the ```viper new``` command
+- -e|--entry-point (entry point layout)
+- -c|--class (class layout),
+- -s|--simple (simple layout) 
+### Managing Pip Packages
+You may notice a ```[dependencies]``` section in the pyproject.toml file with a ```required```. This is an added section viper uses to know what packages you need to  install for you project. All you need to do is add the package name into the ```required``` list
+```toml
+[dependencies]
+required = [
+	"toml",
+]
+```
+then run
+```bash
+viper reload
+```
+to reload your packages.
+To remove packages, just delete the package name from the [dependencies] section of the pyproject.toml file
+```toml
+[dependencies]
+required = []
+```
+and run
+```bash
+viper reload
+```
+to reload your packages again. Remember to run the viper reload command after changing project dependencies, otherwise those packages will not get added to the 
 ### Commands
 Commands that manipulate your Project is as follows:
 ```bash
-viper run     : if in a folder created by viper new, it will run the main.py file sourcing the local virtual environment
-viper list    : if in a folder created by viper new, it will return the list of installed packages in the local virtual environment
-viper install : if in a folder created by viper new, it will install the specified package to the local virtual environment
-viper remove  : if in a folder created by viper new, it will remove the specified package from the local virtual environment
+viper run    : if in a folder created by viper new, it will run the main.py file sourcing the local virtual environment
+viper reload : if in a folder created by viper new, it will reload the packages listed under the [dependencies] section of the pyproject.toml file and install/remove packages as needed
 ```
 
 ## Future Plans
-- Overhauling the ```viper install``` and ```viper remove``` commands for a config.toml file in the root directory of your project similar in functionality to the Cargo.toml file in Rust.
+- [X] Overhauling the ```viper install``` and ```viper remove``` commands for a config.toml file in the root directory of your project similar in functionality to the Cargo.toml file in Rust.
+	- note that the pyproject.toml file was chosen instead of config.toml
+- [ ] Adding the ability to search for pypi packages using viper. I can imagine how helpful this might be after pip removed their built in search feature
+- [ ] Moving source files to a src/ folder
