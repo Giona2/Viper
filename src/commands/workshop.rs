@@ -1,4 +1,7 @@
+use crate::data;
 use crate::error_handler::{io_lib::IOLibHandler, commands_error::CommandsErrorHandler};
+use crate::io::toml_file::TomlFile;
+use crate::io::toml::TomlExtra;
 
 use std::fs;
 use std::process::Command;
@@ -19,22 +22,54 @@ pub trait InWorkshop {
 
 		// Create project folder
 		println!("{}", "creating project folder...".yellow());
-		let project_dir = format!("./{project_name}/");
+		let project_dir = format!("./{project_name}");
 		fs::create_dir(&project_dir)
             .handle(&project_dir);
 		println!("{}\n", "  project folder created".green());
 
+        // Create ConfigFile
+		println!("{}", "creating config file...".yellow());
+        let config_file_dir: String = format!("{project_dir}/{}", data::CONFIG_FILE_NAME);
+        let mut config_file: TomlFile = TomlFile::new(&config_file_dir);
+        config_file.content = toml::from_str(content::CONFIG_FILE)
+            .unwrap();
+        config_file.content.insert_value(vec!["build-system", "requires"], toml::Value::Array(vec![
+            toml::Value::String("pip".to_string()),
+            toml::Value::String("venv".to_string()),
+            toml::Value::String("viper".to_string()),
+        ]));
+        config_file.content.insert_value(vec!["project", "name"], toml::Value::String(
+            project_name.to_string()
+        ));
+        config_file.content.insert_value(vec!["project", "version"], toml::Value::String(
+            "1.0.0".to_string()
+        ));
+        config_file.content.insert_value(vec!["dependencies", "required"], toml::Value::Array(
+            Vec::new(),
+        ));
+        config_file.update_file();
+		println!("{}\n", "  config file created".green());
+
 		// Create venv folder
 		println!("{}", "creating virtual environment...".yellow());
-		let venv_dir = format!("{project_dir}venv/");
-		Command::new("python3")
+		let venv_dir = format!("{project_dir}/venv");
+		Command::new("python")
 			.args(["-m", "venv", &venv_dir])
             .status().expect("failed to create virtual environment");
 		println!("{}\n", "  virtual environment created".green());
 
+        // Create viper config folder and installed packages file
+        let viper_config_dir = format!("{project_dir}/venv/lib/viper");
+        fs::create_dir(&viper_config_dir)
+            .handle(&viper_config_dir);
+        let installed_packages_dir = format!("{viper_config_dir}/config.toml");
+        let mut installed_packages_file: TomlFile = TomlFile::new(&installed_packages_dir);
+        installed_packages_file.content.insert_value(vec!["installed_packages"], toml::Value::Array(Vec::new()));
+        installed_packages_file.update_file();
+
 		// Create main file
 		println!("{}", "creating main.py".yellow());
-		let main_python_dir: String = format!("{project_dir}main.py");
+		let main_python_dir: String = format!("{project_dir}/main.py");
 		if args.len() == 1 {
 			fs::write(main_python_dir, content::default_content())
                 .expect("Failed to create main.py");

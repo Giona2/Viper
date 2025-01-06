@@ -9,3 +9,11 @@ pub fn class_content() -> String {
 pub fn simple_content() -> String {
 	r#"print("hello, world!")"#.to_string()
 }
+
+pub const CONFIG_FILE: &str =
+r#"[build-system]
+
+[project]
+
+[dependencies]
+required = []"#;
