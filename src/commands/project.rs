@@ -63,7 +63,7 @@ pub trait InProject{
 
 
         // Remove Packages
-        let mut packages_indexes_to_remove: Vec<usize> = Vec::new();
+        let mut updated_installed_packages: Vec<toml::Value> = Vec::new();
 
         for (i, installed_package) in installed_packages.clone().iter().enumerate() {
 
@@ -73,12 +73,20 @@ pub trait InProject{
                 
                 Command::new(data::PIP_DIR).arg("uninstall")
                     .arg(installed_package_name)
+                    .arg("-y")
                     .status().unwrap();
                 
-            }
+            } else {
+                let installed_package_name: String = installed_package.to_string()
+                    .replace("\"", "");
 
-            packages_indexes_to_remove.push(i);
+                updated_installed_packages.push(toml::Value::String(installed_package_name));
+            }
         }
+
+        installed_packages.clear();
+        installed_packages.extend(updated_installed_packages);
+
 
         viper_config_file.update_file();
     }
