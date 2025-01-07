@@ -4,10 +4,11 @@ mod commands;
 use commands::{Commands, workshop::*, project::*};
 mod error_handler;
 mod data_file_parsing;
+mod pip_frontend;
 mod data;
 
 
-fn main() {
+fn _main() {
 	let args: Vec<String> = args().collect();
 
 	let commands = Commands::_new();
@@ -21,4 +22,11 @@ fn main() {
 		"help" | "h" => commands.help(),
 		_ => {}
 	}
+}
+
+
+use pip_frontend::PipFrontend;
+fn main() {
+    let pip_frontend = PipFrontend::new();
+    pip_frontend.search("toml");
 }
