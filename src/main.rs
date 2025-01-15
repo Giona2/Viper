@@ -25,8 +25,25 @@ fn _main() {
 }
 
 
-use pip_frontend::PipFrontend;
+const WEBSITE: &str = 
+r#"
+<body>
+    <ul>
+        <li class="meh">hey</li>
+        <li>hello</li>
+    </ul>
+</body>
+"#;
+
+use data_file_parsing::html::{data::*, HtmlExtra};
+use scraper::Html;
 fn main() {
-    let pip_frontend = PipFrontend::new();
-    pip_frontend.search("toml");
+    let html_doc = Html::parse_document(WEBSITE);
+    let div = html_doc.get_element(&[
+        HtmlElmt::new("body",   None),
+        HtmlElmt::new("ul",     None),
+        HtmlElmt::new("li.meh", None),
+    ]);
+
+    println!("{:?}", div)
 }

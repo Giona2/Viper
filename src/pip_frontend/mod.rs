@@ -42,6 +42,10 @@ impl PipFrontend {
             .text().unwrap();
 
         let document = scraper::Html::parse_document(&body);
+        let body_element: scraper::ElementRef = document.select(&body_selector).next().unwrap();
+        println!("ul_elements: {:?}", body_element);
+        let body_children: String = body_element.text().collect();
+        println!("ul_children: {:?}", body_children);
 
         Vec::new()
     }
