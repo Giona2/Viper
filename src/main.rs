@@ -35,15 +35,11 @@ r#"
 </body>
 "#;
 
-use data_file_parsing::html::{data::*, HtmlExtra};
+use data_file_parsing::html::HtmlExtra;
 use scraper::Html;
 fn main() {
     let html_doc = Html::parse_document(WEBSITE);
-    let div = html_doc.get_element(&[
-        HtmlElmt::new("body",   None),
-        HtmlElmt::new("ul",     None),
-        HtmlElmt::new("li.meh", None),
-    ]);
+    let div = html_doc.get_element(&["body", "ul", "li.meh"]);
 
     println!("{:?}", div)
 }
