@@ -15,6 +15,9 @@ pub trait HtmlExtra {
     /// ])
     fn get_element(&self, sequential_keys: &[&str]) -> String {
         fn get_element_recursive(html_doc: &Html, sequential_keys: &[&str]) -> String {
+            println!("Current element: {}", sequential_keys[0]);
+            println!("Current Doc: {}\n", html_doc.html());
+
             if sequential_keys.len() > 1 {
                 let selector = Selector::parse(&sequential_keys[0]).unwrap();
                 let current_element = &html_doc.select(&selector).next().unwrap();

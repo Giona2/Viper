@@ -35,11 +35,23 @@ r#"
 </body>
 "#;
 
+use reqwest;
 use data_file_parsing::html::HtmlExtra;
 use scraper::Html;
 fn main() {
-    let html_doc = Html::parse_document(WEBSITE);
-    let div = html_doc.get_element(&["body", "ul", "li.meh"]);
+    let client = reqwest::blocking::Client::new();
+    let html_content = client.get("https://www.pypi.org/search/?q=toml")
+        .send().unwrap()
+        .text().unwrap();
+
+    let html_doc = Html::parse_document(&html_content);
+    let div = html_doc.get_element(&[
+        "body",
+        "main",
+        "div",
+        "div.left_layout",
+        "div.left-layout__main",
+    ]);
 
     println!("{:?}", div)
 }
