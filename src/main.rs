@@ -36,22 +36,19 @@ r#"
 "#;
 
 use reqwest;
-use data_file_parsing::html::HtmlExtra;
+use data_file_parsing::html::{data::HtmlElmt, HtmlExtra};
 use scraper::Html;
 fn main() {
     let client = reqwest::blocking::Client::new();
-    let html_content = client.get("https://www.pypi.org/search/?q=toml")
+    let html_content = client.get("https://pydigger.com/search?q=yaml")
         .send().unwrap()
         .text().unwrap();
 
     let html_doc = Html::parse_document(&html_content);
     let div = html_doc.get_element(&[
-        "body",
-        "main",
-        "div",
-        "div.left_layout",
-        "div.left-layout__main",
+        HtmlElmt::new(0, "body"),
+        HtmlElmt::new(0, "table"),
     ]);
 
-    println!("{:?}", div)
+    println!("{}", div)
 }
