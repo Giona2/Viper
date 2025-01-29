@@ -16,8 +16,8 @@ fn main() {
 		"new"		 => commands.new(args[2..args.len()].to_vec()),
         
 		"run"		 => commands.run(),
-		"list"		 => commands.list(),
         "reload"     => commands.reload(),
+        "search"     => commands.search(&args[2]),
 
 		"help" | "h" => commands.help(),
 		_ => {}

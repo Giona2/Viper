@@ -29,9 +29,5 @@ pub struct Commands {
         println!();
         println!("viper search <{}>", "package name".yellow());
         println!("  searches pypi.org for the package name given and prints the name and version number of all matched packages");
-        println!();
-        println!("viper info <{}>", "package_name".yellow());
-        println!("  prints more verbose information about one package");
-        println!("  the exact package name must be used or an error will be returned");
 	}
 }
