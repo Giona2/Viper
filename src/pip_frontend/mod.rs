@@ -30,16 +30,13 @@ impl PipFrontend {
     /// Searches pypi.org to get all matches of the given package_name
     /// EXPERIMENTAL
     pub fn search(&self, package_name: &str) -> Vec<MatchedPackage> {
-        //let client = reqwest::blocking::Client::new();
-        //let search_response_content = //cont...
-        //client.get(&format!("https://pydigger.com/search?q={package_name}"))
-        //    .send().unwrap()
-        //    .text().unwrap();
-        let content = fs::read_to_string("./output.log")
-            .unwrap();
+        let client = reqwest::blocking::Client::new();
+        let search_response_content = client.get(&format!("https://pydigger.com/search?q={package_name}"))
+            .send().unwrap()
+            .text().unwrap();
 
         let tr_selector = Selector::parse("table.table tbody tr td").unwrap();
-        let doc = Html::parse_document(&content);
+        let doc = Html::parse_document(&search_response_content);
         let table_rows: Vec<_> = doc.select(&tr_selector).collect();
 
         let mut result = Vec::new();
@@ -48,7 +45,7 @@ impl PipFrontend {
                 let a_selector = Selector::parse("a").unwrap();
                 let current_package_name_doc = Html::parse_fragment(&table_rows[i-3].inner_html());
                 let current_package_name = current_package_name_doc.select(&a_selector).next();
-                if let None = current_package_name { break; }
+                if let None = current_package_name { continue; }
 
                 let current_package = MatchedPackage::new(
                     &current_package_name.unwrap().inner_html(),
@@ -60,5 +57,9 @@ impl PipFrontend {
         }
         
         return result
+    }
+
+    pub fn get_info(&self, package_name: &str) -> String {
+        String::new()
     }
 }
