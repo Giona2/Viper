@@ -35,20 +35,20 @@ r#"
 </body>
 "#;
 
-use reqwest;
-use data_file_parsing::html::{data::HtmlElmt, HtmlExtra};
+use pip_frontend::PipFrontend;
+use std::fs;
 use scraper::Html;
+use scraper::Selector;
 fn main() {
-    let client = reqwest::blocking::Client::new();
-    let html_content = client.get("https://pydigger.com/search?q=yaml")
-        .send().unwrap()
-        .text().unwrap();
-
-    let html_doc = Html::parse_document(&html_content);
-    let div = html_doc.get_element(&[
-        HtmlElmt::new(0, "body"),
-        HtmlElmt::new(0, "table"),
-    ]);
-
-    println!("{}", div)
+    //let td_selector = Selector::parse("table.table tbody tr td").unwrap();
+    //let doc = Html::parse_document(&fs::read_to_string("./output.log").unwrap());
+    //let tds: Vec<_> = doc.select(&td_selector).collect();
+    //for (i, td) in tds.iter().enumerate() {
+    //    println!("{}", td.inner_html());
+    //    if (i + 1) % 4 == 0 { println!("END\n") };
+    //}
+    let pf = PipFrontend::new();
+    for package in pf.search("") {
+        println!("{:?}", package);
+    }
 }
