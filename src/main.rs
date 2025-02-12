@@ -15,7 +15,7 @@ fn main() {
 	match args[1].as_str() {
 		"new"		 => commands.new(args[2..args.len()].to_vec()),
         
-		"run"		 => commands.run(),
+		"run"		 => commands.run(args[3..args.len()].to_vec()),
         "reload"     => commands.reload(),
         "search"     => commands.search(&args[2]),
 

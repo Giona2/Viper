@@ -21,8 +21,9 @@ pub struct Commands {
 	    println!("    -c | --class      : Creates the main.py in the object-oriented layout");
 	    println!("    -s | --simple     : Creates the main.py in the most simplistic layout as possible");
 	    println!();
-		println!("viper run");
+		println!("viper run -- <{}>", "file arguments".yellow());
 		println!("  if in a folder created by viper new, it will run the main.py file sourcing the local virtual environment");
+        println!("  any argument you pass in after the \"--\" will be forwarded to the main.py file");
 	    println!();
         println!("viper reload");
         println!("  if in a folder created by viper new, it will reload the packages listed under the [dependencies] section of the pyproject.toml file and install/remove packages as needed");

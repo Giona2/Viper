@@ -11,17 +11,18 @@ use super::{Commands, commands_error::CommandsError};
 
 
 pub trait InProject{
-	fn run(&self);
+	fn run(&self, args: Vec<String>);
     fn reload(&self);
     fn search(&self, package_name: &str);
 
 } impl InProject for Commands {
-	fn run(&self) {
+	fn run(&self, args: Vec<String>) {
         CommandsError::in_project_directory()
             .handle();
 
 		Command::new(data::INTERPRETER_DIR)
 			.arg(&(data::SOURCE_FILES_DIR.to_owned() + "/main.py"))
+            .args(args)
             .status().expect("Failed to run main.py");
 	}
 
