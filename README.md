@@ -65,7 +65,7 @@ required = []
 name = "<project name>"
 version = "1.0.0"
 ```
-The pyproject.py file details the project's metadata, mainly the required programs it needs to run ```[build system]```, the python packages it needs to install ```[dependencies]```, and the specific metadata like the project name and version ```[project]```\n
+The pyproject.py file details the project's metadata, mainly the required programs it needs to run ```[build system]```, the python packages it needs to install ```[dependencies]```, and the specific metadata like the project name and version ```[project]```  
 As some python enthusiasts may notice, this file is meant to compatibilize with pypi, the only added difference being the ```[dependencies]``` field. To my knowlege, this shouldn't interfere if you wish to upload your project to pypi, but feel free to post a complaint about it if it does
 
 ## Commands
