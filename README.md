@@ -12,7 +12,7 @@ To create a new project, just run
 ```bash
 viper new <project name>
 ```
-and replace the \<project name\> field with the name of your project. Be sure to use common characters like lowercase letters, underscores, and numbers in the project name to minimize possible problems in the future (ex, first_project).
+and replace the ```<project name>``` field with the name of your project. Be sure to use common characters like lowercase letters, underscores, and numbers in the project name to minimize possible problems in the future (ex, first_project).
 ```viper new``` will create a directory with the same name as the project name, then a src directory with a main.py entry file, a virtual environment (venv) folder, and a pyproject.toml file
 ```bash
 <project name>
