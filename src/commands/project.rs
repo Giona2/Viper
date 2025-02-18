@@ -5,7 +5,7 @@ use crate::data_file_parsing::toml::TomlExtra;
 use crate::pip_frontend::PipFrontend;
 
 use std::process::Command;
-use colored::Colorize;
+use std::fs;
 
 use super::{Commands, commands_error::CommandsError};
 
@@ -17,8 +17,7 @@ pub trait InProject{
 
 } impl InProject for Commands {
 	fn run(&self, args: Vec<String>) {
-        CommandsError::in_project_directory()
-            .handle();
+        // Error handling
 
 		Command::new(data::INTERPRETER_DIR)
 			.arg(&(data::SOURCE_FILES_DIR.to_owned() + "/main.py"))

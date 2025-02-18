@@ -1,3 +1,4 @@
+use std::fs;
 use colored::Colorize;
 
 
@@ -29,6 +30,16 @@ pub struct Commands {
         println!("  if in a folder created by viper new, it will reload the packages listed under the [dependencies] section of the pyproject.toml file and install/remove packages as needed");
         println!();
         println!("viper search <{}>", "package name".yellow());
-        println!("  searches pypi.org for the package name given and prints the name and version number of all matched packages");
+        println!("  searches pydigger.com for the package name and version number of all matched packages");
 	}
+
+    fn check_if_exists(paths: &[&str]) -> bool {
+        let mut result: bool = false;
+
+        for path in paths {
+            if fs::exists(path).unwrap() {}
+        }
+        
+        return result
+    }
 }
