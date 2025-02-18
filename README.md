@@ -12,7 +12,7 @@ To create a new project, just run
 ```bash
 viper new <project name>
 ```
-and replace the <project name> field with the name of your project. Be sure to use common characters like lowercase letters, underscores, and numbers in the project name to minimize possible problems in the future (ex, first_project).
+and replace the \<project name\> field with the name of your project. Be sure to use common characters like lowercase letters, underscores, and numbers in the project name to minimize possible problems in the future (ex, first_project).
 ```viper new``` will create a directory with the same name as the project name, then a src directory with a main.py entry file, a virtual environment (venv) folder, and a pyproject.toml file
 ```bash
 <project name>
@@ -65,7 +65,7 @@ required = []
 name = "<project name>"
 version = "1.0.0"
 ```
-The pyproject.py file details the project's metadata, mainly the required programs it needs to run ```[build system]```, the python packages it needs to install ```dependencies```, and the specific metadata like the project name and version ```[project]```
+The pyproject.py file details the project's metadata, mainly the required programs it needs to run ```[build system]```, the python packages it needs to install ```[dependencies]```, and the specific metadata like the project name and version ```[project]```
 As some python enthusiasts may notice, this file is meant to compatibilize with pypi, the only added difference being the ```[dependencies]``` field. To my knowlege, this shouldn't interfere if you wish to upload your project to pypi, but feel free to post a complaint about it if it does
 
 ## Commands
