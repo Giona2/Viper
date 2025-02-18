@@ -21,7 +21,7 @@ and replace the <project name> field with the name of your project. Be sure to u
    |- main.py
 |- pyproject.toml
 ```
-### main.py
+#### main.py
 By default, main.py will be formatted in the entry point format
 ```python
 def main():
@@ -31,9 +31,9 @@ def main():
 if __name__ == "__main__":
     main()
 ```
-The entry point format is well known for it verbosity, so it was chosen for the default. There are two formats you can use, referred to as the class and simple format
+The entry point format is well known for it verbosity, so it was chosen for the default. There are two formats you can use, referred to as the class format and the simple format
 ```python
-# class layout
+# class format
 class Main:
     def __init__(self):
         print("hello, world!")
@@ -42,7 +42,7 @@ class Main:
 if __name__ == "__main__":
     Main()
 
-# simple layout
+# simple format
 print("hello, world!")
 ```
 To tell viper to use either of these formats, you need to pass in the format tag after your project name in viper run. Assuming the name of the project is first_project, the arguments you can pass in are as follows:
@@ -52,7 +52,7 @@ viper first_project -c | viper first_project --class
 viper first_project -s | viper first_project --simple
 ```
 See below to find out how to install packages to your project
-### pyproject.toml
+#### pyproject.toml
 For reference, this is the default layout of the pyproject.toml file
 ```toml
 [build-system]
