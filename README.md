@@ -1,6 +1,14 @@
 # Viper Pip Wrapper
 Viper is a python project manager and pip wrapper based on Rust's cargo package manager. Viper is meant to make creating and managing python projects a centralized process.
 
+## Table of Contents
+* [How to use](#how-to-use)
+    * [Create a new project](#create-a-new-project)
+    * [main.py](#main.py)
+    * [pyproject.toml](#pyproject.toml)
+* [Commands](#commands)
+* [Future Plans](#future-plans)
+
 ## How to use
 Viper presents a steamlined method of managing python projects on the user's computer, so naturally viper will be exceedingly easy to use (at least in my opinion)
 ### Create a new project
@@ -12,7 +20,7 @@ To create a new project, just run
 ```bash
 viper new <project name>
 ```
-and replace the ```<project name>``` field with the name of your project. Be sure to use common characters like lowercase letters, underscores, and numbers in the project name to minimize possible problems in the future (ex, first_project).
+and replace the <project name> field with the name of your project. Be sure to use common characters like lowercase letters, underscores, and numbers in the project name to minimize possible problems in the future (ex, first_project).
 ```viper new``` will create a directory with the same name as the project name, then a src directory with a main.py entry file, a virtual environment (venv) folder, and a pyproject.toml file
 ```bash
 <project name>
@@ -31,9 +39,9 @@ def main():
 if __name__ == "__main__":
     main()
 ```
-The entry point format is well known for it verbosity, so it was chosen for the default. There are two formats you can use, referred to as the class and simple format
+The entry point format is well known for it verbosity, so it was chosen for the default. There are two formats you can use, referred to as the class format and the simple format
 ```python
-# class layout
+# class format
 class Main:
     def __init__(self):
         print("hello, world!")
@@ -42,10 +50,10 @@ class Main:
 if __name__ == "__main__":
     Main()
 
-# simple layout
+# simple format
 print("hello, world!")
 ```
-To tell viper to use either of these formats, you need to pass in the format tag after your project name in ```viper run```. Assuming the name of the project is first_project, the arguments you can pass in are as follows:
+To tell viper to use either of these formats, you need to pass in the format tag after your project name in viper run. Assuming the name of the project is first_project, the arguments you can pass in are as follows:
 ```bash
 viper first_project -e | viper first_project --entry-point
 viper first_project -c | viper first_project --class
@@ -65,7 +73,7 @@ required = []
 name = "<project name>"
 version = "1.0.0"
 ```
-The pyproject.py file details the project's metadata, mainly the required programs it needs to run ```[build system]```, the python packages it needs to install ```[dependencies]```, and the specific metadata like the project name and version ```[project]```  
+The pyproject.py file details the project's metadata, mainly the required programs it needs to run ```[build system]```, the python packages it needs to install ```dependencies```, and the specific metadata like the project name and version ```[project]```
 As some python enthusiasts may notice, this file is meant to compatibilize with pypi, the only added difference being the ```[dependencies]``` field. To my knowlege, this shouldn't interfere if you wish to upload your project to pypi, but feel free to post a complaint about it if it does
 
 ## Commands
