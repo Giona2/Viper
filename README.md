@@ -29,6 +29,35 @@ and replace the ```<project name>``` field with the name of your project. Be sur
    |- main.py
 |- pyproject.toml
 ```
+### Manage dependencies
+To start, make sure your pwd (present working directory) is located inside a project created by ```viper new```
+```bash
+cd /project/directory
+```
+next, you'll need to open the ```pyproject.toml``` file. You should see a ```[dependencies]```
+```toml
+[dependencies]
+required=[]
+```
+and notice a ```required``` field, this field is the list viper will read and install from. All you need to do it find the name of a dependency, we'll take the ```toml``` package for example, and add it to the ```required``` list
+```toml
+[dependencies]
+required=["toml"]
+```
+and run 
+```bash
+viper reload
+```
+to apply the changes. Viper will then install that packages using pip, then add the package's name to the venv/lib/viper installed packages list. This will allow you to remove the package just by deleting it's entry from the ```required``` field
+```toml
+[dependencies]
+required=[]
+```
+and running
+```bash
+viper reload
+```
+to delete the dependency and remove it's entry from the installed packages list
 ### main python file
 By default, main.py will be formatted in the entry point format
 ```python
@@ -73,7 +102,10 @@ required = []
 name = "<project name>"
 version = "1.0.0"
 ```
-The pyproject.py file details the project's metadata, mainly the required programs it needs to run ```[build system]```, the python packages it needs to install ```dependencies```, and the specific metadata like the project name and version ```[project]```
+The pyproject.py file details the project's metadata. The following fields are meant for these tasks:
+- ```[build system]```: Details the machine it must be ran on. Currently, it only details the required programs you need on your computer
+- ```[dependencies]```: Details the python packages viper needs to install to run the script. Uses the required field to accomplish this.
+- ```[project]```: Details the specific metadata of the project like the project name and version 
 As some python enthusiasts may notice, this file is meant to compatibilize with pypi, the only added difference being the ```[dependencies]``` field. To my knowlege, this shouldn't interfere if you wish to upload your project to pypi, but feel free to post a complaint about it if it does
 
 ## Commands
