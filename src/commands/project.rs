@@ -5,7 +5,7 @@ use crate::data_file_parsing::toml::TomlExtra;
 use crate::pip_frontend::PipFrontend;
 use crate::error_handler::python::PythonHandler;
 
-use std::process::Command;
+use std::process;
 
 use super::Commands;
 
@@ -17,7 +17,17 @@ pub trait InProject{
 
 } impl InProject for Commands {
 	fn run(&self, args: Vec<String>) {
-		Command::new(data::INTERPRETER_DIR)
+        // Error handling
+        if args[0] != "--" {
+            println!("unknown argument after run\nmake sure to use -- before passing in arguments for main.py");
+            process::exit(1);
+        }
+        if args.len() < 1 {
+            println!("some args are missing\ntype viper help to see how to use this command");
+            process::exit(1);
+        }
+
+		process::Command::new(data::INTERPRETER_DIR)
 			.arg(&(data::SOURCE_FILES_DIR.to_owned() + "/main.py"))
             .args(args)
             .status().python_handle();

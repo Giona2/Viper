@@ -1,4 +1,4 @@
-use std::env::args;
+use std::{env::args, process};
 
 mod commands;
 use commands::{Commands, workshop::*, project::*};
@@ -10,16 +10,20 @@ mod data;
 
 fn main() {
 	let args: Vec<String> = args().collect();
+    if args.len() < 2 {
+        println!("unknown command given\ntype viper help to see how to use this command");
+        process::exit(1)
+    }
 
 	let commands = Commands::_new();
 	match args[1].as_str() {
 		"new"		 => commands.new(args[2..args.len()].to_vec()),
         
-		"run"		 => commands.run(args[3..args.len()].to_vec()),
+		"run"		 => commands.run(args[2..args.len()].to_vec()),
         "reload"     => commands.reload(),
         "search"     => commands.search(&args[2]),
 
 		"help" | "h" => commands.help(),
-		_ => {}
+		           _ => {println!("unknown command given\ntype viper help to see how to use this command"); process::exit(1)}
 	}
 }

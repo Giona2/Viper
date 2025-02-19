@@ -4,7 +4,7 @@ use crate::error_handler::python::PythonHandler;
 use crate::data_file_parsing::toml_file::TomlFile;
 use crate::data_file_parsing::toml::TomlExtra;
 
-use std::fs;
+use std::{fs, process};
 use std::process::Command;
 use colored::Colorize;
 
@@ -16,6 +16,12 @@ pub trait InWorkshop {
 
 } impl InWorkshop for Commands {
 	fn new(&self, args: Vec<String>) {
+        // Error handling
+        if args.len() < 1 {
+            println!("some args are missing\ntype viper help to see how to use this command");
+            process::exit(1);
+        }
+
 		// Check if name is right
 		let project_name: &str = &args[0];
 

@@ -14,8 +14,8 @@ pub trait IOLibHandler<T> {
             io::ErrorKind::IsADirectory     => { println!("{subject_name} is a directory, not a file") }
             io::ErrorKind::AlreadyExists    => { println!("{subject_name} already exists") }
             io::ErrorKind::NotADirectory    => { println!("{subject_name} is a file, not a directory") }
-            io::ErrorKind::PermissionDenied => { println!("You do not have permission to access {subject_name}") }
-                                          _ => { println!("Unknown/Unspecified error occurred while operating on {subject_name}") }
+            io::ErrorKind::PermissionDenied => { println!("you do not have permission to access {subject_name}") }
+                                          _ => { println!("unknown/Unspecified error occurred while operating on {subject_name}") }
         }; process::exit(1);}
     }}
 }
