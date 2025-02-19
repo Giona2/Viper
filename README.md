@@ -29,7 +29,7 @@ and replace the <project name> field with the name of your project. Be sure to u
    |- main.py
 |- pyproject.toml
 ```
-### main.py
+### main python file
 By default, main.py will be formatted in the entry point format
 ```python
 def main():
@@ -60,7 +60,7 @@ viper first_project -c | viper first_project --class
 viper first_project -s | viper first_project --simple
 ```
 See below to find out how to install packages to your project
-### pyproject.toml
+### pyproject toml file
 For reference, this is the default layout of the pyproject.toml file
 ```toml
 [build-system]
