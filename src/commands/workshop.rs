@@ -1,5 +1,6 @@
 use crate::data;
 use crate::error_handler::io_lib::IOLibHandler;
+use crate::error_handler::python::PythonHandler;
 use crate::data_file_parsing::toml_file::TomlFile;
 use crate::data_file_parsing::toml::TomlExtra;
 
@@ -22,7 +23,7 @@ pub trait InWorkshop {
 		println!("{}", "creating project folder...".yellow());
 		let project_dir = format!("./{project_name}");
 		fs::create_dir(&project_dir)
-            .handle(&project_dir);
+            .io_lib_handle(&project_dir);
 		println!("{}\n", "  project folder created".green());
 
         // Create ConfigFile
@@ -53,13 +54,13 @@ pub trait InWorkshop {
 		let venv_dir = format!("{project_dir}/venv");
 		Command::new("python")
 			.args(["-m", "venv", &venv_dir])
-            .status().expect("failed to create virtual environment");
+            .status().python_handle();
 		println!("{}\n", "  virtual environment created".green());
 
         // Create viper config folder and installed packages file
         let viper_config_dir = format!("{project_dir}/venv/lib/viper");
         fs::create_dir(&viper_config_dir)
-            .handle(&viper_config_dir);
+            .io_lib_handle(&viper_config_dir);
         let installed_packages_dir = format!("{viper_config_dir}/config.toml");
         let mut installed_packages_file: TomlFile = TomlFile::new(&installed_packages_dir);
         installed_packages_file.content.insert_value(vec!["installed_packages"], toml::Value::Array(Vec::new()));
@@ -69,7 +70,7 @@ pub trait InWorkshop {
 		println!("{}", "creating src directory...".yellow());
         let src_dir = format!("{project_dir}/src");
         fs::create_dir(&src_dir)
-            .handle(&src_dir);
+            .io_lib_handle(&src_dir);
 		println!("{}\n", "  src directory created".green());
 
 		// Create main file

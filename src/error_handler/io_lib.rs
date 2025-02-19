@@ -4,10 +4,10 @@ use std::process;
 
 
 pub trait IOLibHandler<T> {
-    fn handle(self, subject_name: &str) -> T;
+    fn io_lib_handle(self, subject_name: &str) -> T;
 
 } impl<T> IOLibHandler<T> for Result<T, io::Error> {
-    fn handle(self, subject_name: &str) -> T { match self {
+    fn io_lib_handle(self, subject_name: &str) -> T { match self {
         Ok(val)  => { return val }
         Err(err) => { match err.kind() {
             io::ErrorKind::NotFound         => { println!("{subject_name} could not be found") }
