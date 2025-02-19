@@ -5,7 +5,6 @@ use crate::data_file_parsing::toml::TomlExtra;
 use crate::pip_frontend::PipFrontend;
 
 use std::process::Command;
-use std::fs;
 
 use super::{Commands, commands_error::CommandsError};
 
@@ -42,9 +41,7 @@ pub trait InProject{
             let package_name: String = package.to_string()
                 .replace("\"", "");
 
-            Command::new(data::PIP_DIR).arg("install")
-                .arg(&package_name)
-                .status().unwrap();
+            self.pip.install(&package_name);
 
             installed_packages.push(toml::Value::String(package_name));
         }
@@ -59,10 +56,7 @@ pub trait InProject{
                 let installed_package_name: String = installed_package.to_string()
                     .replace("\"", "");
                 
-                Command::new(data::PIP_DIR).arg("uninstall")
-                    .arg(installed_package_name)
-                    .arg("-y")
-                    .status().unwrap();
+                self.pip.remove(&installed_package_name);
                 
             } else {
                 let installed_package_name: String = installed_package.to_string()

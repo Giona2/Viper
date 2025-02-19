@@ -1,4 +1,5 @@
-use std::fs;
+use crate::pip_frontend::PipFrontend;
+
 use colored::Colorize;
 
 
@@ -8,8 +9,11 @@ pub mod content;
 pub mod commands_error;
 
 pub struct Commands {
+    pip: PipFrontend,
+
 } impl Commands {
 	pub fn _new() -> Commands { Commands {
+        pip: PipFrontend::new(),
 	}}
 
 	pub fn help(&self, ) {
@@ -32,14 +36,4 @@ pub struct Commands {
         println!("viper search <{}>", "package name".yellow());
         println!("  searches pydigger.com for the package name and version number of all matched packages");
 	}
-
-    fn check_if_exists(paths: &[&str]) -> bool {
-        let mut result: bool = false;
-
-        for path in paths {
-            if fs::exists(path).unwrap() {}
-        }
-        
-        return result
-    }
 }

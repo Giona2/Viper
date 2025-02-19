@@ -1,5 +1,3 @@
-use crate::{data::PIP_DIR, main};
-
 use std::process;
 use scraper::{Html, Selector};
 
@@ -8,22 +6,23 @@ pub mod data;
 use data::MatchedPackage;
 
 const SEARCH_SITE: &str = "https://pydigger.com/search?q=";
+const PIP_DIR: &str = "venv/bin/pip";
 
-use std::fs;
 pub struct PipFrontend {
-    pip_dir: String,
-    search_site: String,
-}
-impl PipFrontend {
-    pub fn new() -> PipFrontend { PipFrontend {
-        pip_dir: PIP_DIR.to_string(),
-        search_site: SEARCH_SITE.to_string(),
-    }}
+} impl PipFrontend {
+    pub fn new() -> PipFrontend { PipFrontend {}}
 
     /// Installs a package to the local venv using pip
     pub fn install(&self, package_name: &str) {
-        process::Command::new(&self.pip_dir).arg("install")
+        process::Command::new(PIP_DIR).arg("install")
             .arg(package_name)
+            .status().unwrap();
+    }
+
+    pub fn remove(&self, package_name: &str) {
+        process::Command::new(PIP_DIR).arg("uninstall")
+            .arg(package_name)
+            .arg("-y")
             .status().unwrap();
     }
 
@@ -31,7 +30,7 @@ impl PipFrontend {
     /// EXPERIMENTAL
     pub fn search(&self, package_name: &str) -> Vec<MatchedPackage> {
         let client = reqwest::blocking::Client::new();
-        let search_response_content = client.get(&format!("https://pydigger.com/search?q={package_name}"))
+        let search_response_content = client.get(&(SEARCH_SITE.to_owned() + &package_name))
             .send().unwrap()
             .text().unwrap();
 
@@ -57,9 +56,5 @@ impl PipFrontend {
         }
         
         return result
-    }
-
-    pub fn get_info(&self, package_name: &str) -> String {
-        String::new()
     }
 }
