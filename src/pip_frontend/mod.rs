@@ -1,3 +1,6 @@
+use crate::error_handler::python::PipHandler;
+use crate::data::PIP_DIR;
+
 use std::process;
 use scraper::{Html, Selector};
 
@@ -6,7 +9,6 @@ pub mod data;
 use data::MatchedPackage;
 
 const SEARCH_SITE: &str = "https://pydigger.com/search?q=";
-const PIP_DIR: &str = "venv/bin/pip";
 
 pub struct PipFrontend {
 } impl PipFrontend {
@@ -16,14 +18,14 @@ pub struct PipFrontend {
     pub fn install(&self, package_name: &str) {
         process::Command::new(PIP_DIR).arg("install")
             .arg(package_name)
-            .status().unwrap();
+            .status().pip_handle();
     }
 
     pub fn remove(&self, package_name: &str) {
         process::Command::new(PIP_DIR).arg("uninstall")
             .arg(package_name)
             .arg("-y")
-            .status().unwrap();
+            .status().pip_handle();
     }
 
     /// Searches pypi.org to get all matches of the given package_name

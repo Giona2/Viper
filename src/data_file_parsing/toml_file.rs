@@ -15,12 +15,12 @@ pub struct TomlFile {
 
         if Path::new(path).exists() {
             let file_content: String = fs::read_to_string(path)   
-                .handle(path);
+                .io_lib_handle(path);
             content = toml::from_str(&file_content)
                 .expect(&format!("Failed to parse {path}"));
         } else {
             fs::write(path, toml::to_string::<toml::Table>(&content).unwrap())
-                .handle(path);
+                .io_lib_handle(path);
         }
 
         return TomlFile { path: path.to_string(), content }
@@ -30,7 +30,7 @@ pub struct TomlFile {
         let file_content: String = toml::to_string::<toml::Table>(&self.content)
             .expect(&format!("Failed to parse {}", self.path));
         fs::write(&self.path, file_content)
-            .handle(&self.path);
+            .io_lib_handle(&self.path);
     }
 }
 

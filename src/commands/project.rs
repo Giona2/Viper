@@ -3,6 +3,7 @@ use crate::data_file_parsing::toml_file::TomlFile;
 use crate::data;
 use crate::data_file_parsing::toml::TomlExtra;
 use crate::pip_frontend::PipFrontend;
+use crate::error_handler::python::PythonHandler;
 
 use std::process::Command;
 
@@ -16,12 +17,10 @@ pub trait InProject{
 
 } impl InProject for Commands {
 	fn run(&self, args: Vec<String>) {
-        // Error handling
-
 		Command::new(data::INTERPRETER_DIR)
 			.arg(&(data::SOURCE_FILES_DIR.to_owned() + "/main.py"))
             .args(args)
-            .status().expect("Failed to run main.py");
+            .status().python_handle();
 	}
 
     fn reload(&self) {
