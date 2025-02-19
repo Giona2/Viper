@@ -4,8 +4,8 @@ Viper is a python project manager and pip wrapper based on Rust's cargo package 
 ## Table of Contents
 * [How to use](#how-to-use)
     * [Create a new project](#create-a-new-project)
-    * [main.py](#main.py)
-    * [pyproject.toml](#pyproject.toml)
+    * [main.py](#main-python-file)
+    * [pyproject.toml](#pyproject-toml-file)
 * [Commands](#commands)
 * [Future Plans](#future-plans)
 
