@@ -108,7 +108,7 @@ version = "1.0.0"
 The pyproject.py file details the project's metadata. The following fields are meant for these tasks:
 - ```[build system]```: Details the machine it must be ran on. Currently, it only details the required programs you need on your computer
 - ```[dependencies]```: Details the python packages viper needs to install to run the script. Uses the required field to accomplish this.
-- ```[project]```: Details the specific metadata of the project like the project name and version 
+- ```[project]```: Details the specific metadata of the project like the project name and version  
 As some python enthusiasts may notice, this file is meant to compatibilize with pypi, the only added difference being the ```[dependencies]``` field. To my knowlege, this shouldn't interfere if you wish to upload your project to pypi, but feel free to post a complaint about it if it does
 
 ## Commands
