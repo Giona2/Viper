@@ -4,7 +4,6 @@ Viper is a python project manager and pip wrapper based on Rust's cargo package 
 ## Table of Contents
 * [How to use](#how-to-use)
     * [Create a new project](#create-a-new-project)
-    * [Manage dependencies](#manage-dependencies)
     * [main.py](#main-python-file)
     * [pyproject.toml](#pyproject-toml-file)
 * [Commands](#commands)
@@ -35,21 +34,23 @@ To start, make sure your pwd (present working directory) is located inside a pro
 ```bash
 cd /project/directory
 ```
-next, you'll need to open the ```pyproject.toml``` file. You should see a ```[dependencies]```
+next, you'll need to open the ```pyproject.toml``` file. You should see a ```[dependencies]``` field
 ```toml
 [dependencies]
 required=[]
 ```
-and notice a ```required``` field, this field is the list viper will read and install from. All you need to do it find the name of a dependency, we'll take the ```toml``` package for example, and add it to the ```required``` list
+**Tip**: you can search for packages using the ```viper search <package name>```  
+Notice the ```required``` field under ```[dependencies]```. This field is the list viper will read and install from.  
+All you need to do is find the name of a dependency, we'll take the ```toml``` package for example, and add it to the ```required``` list
 ```toml
 [dependencies]
 required=["toml"]
 ```
-and run 
+then run 
 ```bash
 viper reload
 ```
-to apply the changes. Viper will then install that packages using pip, then add the package's name to the venv/lib/viper installed packages list. This will allow you to remove the package just by deleting it's entry from the ```required``` field
+to apply the changes. Viper will then install the new packages listed using pip, then add the package's name to an ```installed_packages``` list stored in venv/lib/viper. This will allow you to remove the package just by deleting it's entry from the ```required``` field
 ```toml
 [dependencies]
 required=[]
