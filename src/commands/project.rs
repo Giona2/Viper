@@ -1,12 +1,12 @@
 use crate::data_file_parsing::toml::type_conversion::*;
-use crate::{error_handler::commands_error::CommandsErrorHandler, data_file_parsing::toml_file::TomlFile};
+use crate::data_file_parsing::toml_file::TomlFile;
 use crate::data;
 use crate::data_file_parsing::toml::TomlExtra;
 use crate::pip_frontend::PipFrontend;
 
 use std::process::Command;
 
-use super::{Commands, commands_error::CommandsError};
+use super::Commands;
 
 
 pub trait InProject{
@@ -25,9 +25,6 @@ pub trait InProject{
 	}
 
     fn reload(&self) {
-        CommandsError::in_project_directory()
-            .handle();
-
         let mut config_file = TomlFile::new(data::CONFIG_FILE_NAME);
         let mut viper_config_file = TomlFile::new(data::VIPER_CONFIG_FILE_DIR); 
 

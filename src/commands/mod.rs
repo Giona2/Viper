@@ -6,7 +6,6 @@ use colored::Colorize;
 pub mod workshop;
 pub mod project;
 pub mod content;
-pub mod commands_error;
 
 pub struct Commands {
     pip: PipFrontend,

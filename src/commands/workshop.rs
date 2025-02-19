@@ -1,5 +1,5 @@
 use crate::data;
-use crate::error_handler::{io_lib::IOLibHandler, commands_error::CommandsErrorHandler};
+use crate::error_handler::io_lib::IOLibHandler;
 use crate::data_file_parsing::toml_file::TomlFile;
 use crate::data_file_parsing::toml::TomlExtra;
 
@@ -7,7 +7,7 @@ use std::fs;
 use std::process::Command;
 use colored::Colorize;
 
-use super::{Commands, commands_error::CommandsError, content};
+use super::{Commands, content};
 
 
 pub trait InWorkshop {
@@ -17,8 +17,6 @@ pub trait InWorkshop {
 	fn new(&self, args: Vec<String>) {
 		// Check if name is right
 		let project_name: &str = &args[0];
-        CommandsError::proper_characters_are_used(project_name)
-            .handle();
 
 		// Create project folder
 		println!("{}", "creating project folder...".yellow());
