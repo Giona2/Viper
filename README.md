@@ -2,6 +2,7 @@
 Viper is a python project manager and pip wrapper based on Rust's cargo package manager. Viper is meant to make creating and managing python projects a centralized process.
 
 ## Table of Contents
+* [Install](#install)
 * [How to use](#how-to-use)
     * [Create a new project](#create-a-new-project)
     * [Manage dependencies](#manage-dependencies)
@@ -9,7 +10,34 @@ Viper is a python project manager and pip wrapper based on Rust's cargo package 
     * [pyproject.toml](#pyproject-toml-file)
 * [Commands](#commands)
 * [Future Plans](#future-plans)
-
+## Install
+You will need the following packages to compile and use this project
+- rustc
+- cargo
+- rustup
+- python
+- python-pip
+- git  
+  
+The first step is to download the git repository to your machine and move into the downloaded folder
+```bash
+git clone https://https://github.com/Giona2/Viper.git
+cd Viper
+```
+next, compile the project
+```bash
+cargo build -r
+```
+lastly, if you want viper to be accessible through the cli, move the finished binary to the ```/usr/local/bin``` folder and ensure it's included in the ```$PATH``` environment variable
+```bash
+sudo mv target/release/viper /usr/local/bin/
+PATH=$PATH:/usr/local/bin
+```
+Alternatively, you can also install it locally by putting the binary into the ```$HOME/.local/bin``` directory
+```bash
+sudo mv target/release/viper /usr/local/bin/
+PATH=$PATH:/usr/local/bin
+```
 ## How to use
 Viper presents a steamlined method of managing python projects on the user's computer, so naturally viper will be exceedingly easy to use (at least in my opinion)
 ### Create a new project
