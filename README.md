@@ -39,7 +39,7 @@ def main():
 if __name__ == "__main__":
     main()
 ```
-The entry point format is well known for it verbosity, so it was chosen for the default. There are two formats you can use, referred to as the class format and the simple format
+The entry point format is well known for it verbosity, so it was chosen for the default. There are two additional formats you can use, referred to as the class format and the simple format
 ```python
 # class format
 class Main:
