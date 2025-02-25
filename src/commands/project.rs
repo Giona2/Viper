@@ -11,26 +11,32 @@ use super::Commands;
 
 
 pub trait InProject{
-	fn run(&self, args: Vec<String>);
+	fn run(&self, args: Option<Vec<String>>);
     fn reload(&self);
     fn search(&self, package_name: &str);
 
 } impl InProject for Commands {
-	fn run(&self, args: Vec<String>) {
+	fn run(&self, args: Option<Vec<String>>) {
         // Error handling
-        if args[0] != "--" {
+        if args.clone() != None && args.clone().unwrap()[0] != "--" {
             println!("unknown argument after run\nmake sure to use -- before passing in arguments for main.py");
             process::exit(1);
         }
-        if args.len() < 1 {
+        if args.clone() != None && args.clone().unwrap().len() < 1 {
             println!("some args are missing\ntype viper help to see how to use this command");
             process::exit(1);
         }
 
-		process::Command::new(data::INTERPRETER_DIR)
-			.arg(&(data::SOURCE_FILES_DIR.to_owned() + "/main.py"))
-            .args(args)
-            .status().python_handle();
+        if let Some(unwrapped_args) = args {
+		    process::Command::new(data::INTERPRETER_DIR)
+			    .arg(&(data::SOURCE_FILES_DIR.to_owned() + "/main.py"))
+                .args(unwrapped_args)
+                .status().python_handle();
+        } else {
+		    process::Command::new(data::INTERPRETER_DIR)
+			    .arg(&(data::SOURCE_FILES_DIR.to_owned() + "/main.py"))
+                .status().python_handle();
+        }
 	}
 
     fn reload(&self) {

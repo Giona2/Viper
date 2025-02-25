@@ -19,7 +19,11 @@ fn main() {
 	match args[1].as_str() {
 		"new"		 => commands.new(args[2..args.len()].to_vec()),
         
-		"run"		 => commands.run(args[2..args.len()].to_vec()),
+		"run"		 => {
+            if args.len() > 2 { commands.run(Some(args[2..args.len()].to_vec())) }
+            else              { commands.run(None) }
+        },
+
         "reload"     => commands.reload(),
         "search"     => commands.search(&args[2]),
 
